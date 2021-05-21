@@ -1,0 +1,23 @@
+/* remove default margin and padding from body */
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* set map, body, and html to 100% of the screen size */
+#map,
+body,
+html {
+  height: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* css to customize Leaflet default styles  */
+.popupCustom .leaflet-popup-tip,
+.popupCustom .leaflet-popup-content-wrapper {
+    background: #e9f89d;
+    color: #243035;
+}
