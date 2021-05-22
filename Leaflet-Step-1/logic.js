@@ -131,12 +131,11 @@ legend.onAdd = function (map) {
 legend.addTo(myMap);
 
 function getColorInd(d) {
-  return d >= 90 ? '#7a0177' : d >= 70 && d <= 89 ? '#c51b8a' : d >= 50 && d <= 69 ? '#f768a1' : d >= 30 && d <= 49 ? '#fbb4b9' :
-      '#feebe2';
+  return d >= 90 ? 'red' : d >= 70 && d <= 89 ? 'DarkOrange' : d >= 50 && d <= 69 ? 'Orange' : d >= 30 && d <= 49 ? 'Gold' :
+  d >= 10 && d <= 29 ? 'GreenYellow':'Lime';
 }  
 
-
-  // Create a layer control
+// Create a layer control
   // Pass in our baseMaps and overlayMaps
   // Add the layer control to the map
   L.control.layers(baseMaps, overlayMaps, {
