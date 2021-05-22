@@ -47,7 +47,7 @@ console.log(earthquakeData)
     else {
       dColor = "Lime";
     }
-    magRadius = feature.properties.mag * 2.5;
+    magRadius = feature.properties.mag * 3.75;
       return L.circleMarker(latlng,{fillOpacity: 0.45,
         color: "black",
         weight: .5,
@@ -73,6 +73,13 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
+  var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "light-v10",
+    accessToken: API_KEY
+  });
+
   var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
@@ -92,6 +99,7 @@ function createMap(earthquakes) {
   var baseMaps = {
     "Satellite Map":satmap,
     "Street Map": streetmap,
+    "Light Map": lightmap,
     "Dark Map": darkmap
   };
 
@@ -116,7 +124,7 @@ function createMap(earthquakes) {
 legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
-        labels = ['<strong>Depth Index</strong>'],
+        labels = ['<strong>Depth Index (km)</strong>'],
         lower = [-10, 10, 30, 50, 70, 90],
         upper = [10, 30, 50, 70, 90, 90 + "+"];
 
