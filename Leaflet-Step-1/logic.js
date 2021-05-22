@@ -30,26 +30,27 @@ console.log(earthquakeData)
     pointToLayer: function (feature, latlng) {
     var dColor = "";
     if (feature.geometry.coordinates[2] > 90) {
-      dColor = "red";
+      dColor = "Red";
     }
     else if (feature.geometry.coordinates[2] > 70) {
-      dColor = "yellow";
+      dColor = "DarkOrange";
     }
     else if (feature.geometry.coordinates[2] > 50) {
-      dColor = "yellow";
+      dColor = "Orange";
     }
     else if (feature.geometry.coordinates[2] > 30) {
-      dColor = "yellow";
+      dColor = "Gold";
     }
     else if (feature.geometry.coordinates[2] > 10) {
-      dColor = "green";
+      dColor = "GreenYellow";
     }
     else {
-      dColor = "green";
+      dColor = "Lime";
     }
-    magRadius = feature.properties.mag * 2;
-      return L.circleMarker(latlng,{fillOpacity: 0.75,
-        color: dColor,
+    magRadius = feature.properties.mag * 2.5;
+      return L.circleMarker(latlng,{fillOpacity: 0.45,
+        color: "black",
+        weight: .5,
         fillColor: dColor,
         // Adjust radius
         radius: magRadius} );
@@ -79,8 +80,17 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
+  var satmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "satellite-streets-v11",
+    accessToken: API_KEY
+  });
+
+
   // Define a baseMaps object to hold our base layers
   var baseMaps = {
+    "Satellite Map":satmap,
     "Street Map": streetmap,
     "Dark Map": darkmap
   };
@@ -96,8 +106,35 @@ function createMap(earthquakes) {
       37.09, -95.71
     ],
     zoom: 3,
-    layers: [streetmap, earthquakes]
+    layers: [satmap, earthquakes]
   });
+
+
+ var legend = L.control({
+    position: 'bottomright'
+});
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        labels = ['<strong>Depth Index</strong>'],
+        lower = [-10, 10, 30, 50, 70, 90],
+        upper = [10, 30, 50, 70, 90, 90 + "+"];
+
+    for (var i = 0; i < lower.length; i++) {
+        div.innerHTML += labels.push(
+            '<i style="background:' + getColorInd(lower[i]) + '"></i> ' + lower[i] + '&ndash;' + upper[i]);
+    }
+    div.innerHTML = labels.join('<br>');
+    return div;
+};
+
+legend.addTo(myMap);
+
+function getColorInd(d) {
+  return d >= 90 ? '#7a0177' : d >= 70 && d <= 89 ? '#c51b8a' : d >= 50 && d <= 69 ? '#f768a1' : d >= 30 && d <= 49 ? '#fbb4b9' :
+      '#feebe2';
+}  
+
 
   // Create a layer control
   // Pass in our baseMaps and overlayMaps
