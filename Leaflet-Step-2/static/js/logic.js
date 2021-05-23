@@ -13,7 +13,6 @@ var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_we
 
 // Use this link to get the geojson data.
 var faulturl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
-// var faulturl = "GeoJSON_PB2002_boundaries.json";
 
 // Customizations for the popups on the markers
 var customOptions =
