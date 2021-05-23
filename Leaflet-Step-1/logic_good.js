@@ -2,10 +2,6 @@
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 // var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
 
-// Use this link to get the geojson data.
-// var faulturl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
-var faulturl = "GeoJSON_PB2002_boundaries.json";
-
 // Perform a GET request to the query URL
 var customOptions =
 {
@@ -14,22 +10,22 @@ var customOptions =
 'className' : 'popupCustom'
 }    
 
-Promise.all([
-    d3.json(queryUrl),
-    d3.json(faulturl)
-]).then(function(files){
-   bothFeatures(files[0].features,files[1].features)
-  });
+d3.json(queryUrl).then(function(data) {
+  // Once we get a response, send the data.features object to the createFeatures function
+  createFeatures(data.features);
+});
 
-function bothFeatures(earthquakeData,ff_data) {
+function createFeatures(earthquakeData) {
 console.log(earthquakeData)
-console.log(ff_data)
   
-var faultdata = L.geoJson(ff_data);
+  function onEachFeature(feature, layer) {
+  layer.bindPopup("<h3> Location: " + feature.properties.place +
+      "</h3><hr><p><b>Magnitude: </b>" + feature.properties.mag + "</p><p><b> Depth of: </b>" + feature.geometry.coordinates[2] + " kilometers</p><p><b> Latitude: </b>" + feature.geometry.coordinates[1] +"</p><p><b> Longitude: </b>" + feature.geometry.coordinates[0] +"</p><p><b> Occured on:  </b>" + new Date(feature.properties.time) +"</p>",customOptions);
+     }
 
-// Create a GeoJSON layer containing the features array on the earthquakeData object
-// Run the onEachFeature function once for each piece of data in the array
-var earthquakes = L.geoJSON(earthquakeData, {
+  // Create a GeoJSON layer containing the features array on the earthquakeData object
+  // Run the onEachFeature function once for each piece of data in the array
+  var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature,
     pointToLayer: function (feature, latlng) {
     var dColor = "";
@@ -61,11 +57,11 @@ var earthquakes = L.geoJSON(earthquakeData, {
     }
   });
 
-  createMap(earthquakes,faultdata);
-  
+  // Sending our earthquakes layer to the createMap function
+  createMap(earthquakes);
+}
 
-// function createMap(earthquakes,faultdata) {
-function createMap(earthquakes,faultdata) {
+function createMap(earthquakes) {
 
   // Define streetmap and darkmap layers
   var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -109,9 +105,7 @@ function createMap(earthquakes,faultdata) {
 
   // Create overlay object to hold our overlay layer
   var overlayMaps = {
-    Earthquakes: earthquakes,
-    "Tectonic Plates": faultdata
-  //  "Fault Lines": faultdata
+    Earthquakes: earthquakes
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load
@@ -120,14 +114,13 @@ function createMap(earthquakes,faultdata) {
       20, -40
     ],
     zoom: 3,
-    layers: [satmap, earthquakes, faultdata]
+    layers: [satmap, earthquakes]
   });
 
 
  var legend = L.control({
     position: 'bottomright'
 });
-
 legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
@@ -150,19 +143,10 @@ function getColorInd(d) {
   d >= 10 && d <= 29 ? 'GreenYellow':'Lime';
 }  
 
-
 // Create a layer control
   // Pass in our baseMaps and overlayMaps
   // Add the layer control to the map
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
-// Check back from here
-}
-function onEachFeature(feature, layer) {
-  layer.bindPopup("<h3> Location: " + feature.properties.place +
-      "</h3><hr><p><b>Magnitude: </b>" + feature.properties.mag + "</p><p><b> Depth of: </b>" + feature.geometry.coordinates[2] + " kilometers</p><p><b> Latitude: </b>" + feature.geometry.coordinates[1] +"</p><p><b> Longitude: </b>" + feature.geometry.coordinates[0] +"</p><p><b> Occured on:  </b>" + new Date(feature.properties.time) +"</p>",customOptions);
-     };
-
-
 }
