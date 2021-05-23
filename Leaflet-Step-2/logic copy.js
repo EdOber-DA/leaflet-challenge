@@ -1,12 +1,4 @@
-//****************************//
-//******* Mainline Code ******//
-//*******  START *************//
-//****************************//
-
-//****************************//
-//******* Initialize Vars ****//
-//****************************//
-//Note a few "backup" URLS left in that were part of testing.**//
+// Initialize variables...note a few "backup" URLS left in that were part of testing.
 // Store our API endpoint inside queryUrl
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 // var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
@@ -23,9 +15,7 @@ var customOptions =
 'className' : 'popupCustom'
 }    
 
-//****************************//
-//******* Load Data     ******//
-//****************************//
+
 // Perform a GET request to the query URLs and a combined promise to wait until fulllfilled
 Promise.all([
     d3.json(queryUrl),
@@ -43,7 +33,7 @@ console.log(ff_data)
 var faultdata = L.geoJson(ff_data);
 
 // Create a GeoJSON layer containing the features array on the earthquakeData object
-// Run the onEachFeature function (see bottom for functions). It is run once for each feature in the array
+// Run the onEachFeature function once for each piece of data in the array
 // pointToLayer will do all the heavy lifting to add colors to the markers based on depth and size them based on the magnitude
 var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature,
@@ -82,27 +72,12 @@ var earthquakes = L.geoJSON(earthquakeData, {
 // Pull the data together from the geoJSON above to create the maps by calling createMap
 createMap(earthquakes,faultdata);
 
-}
-//****************************//
-//******* Mainline Code ******//
-//*******  E N D *************//
-//****************************//
 
 
-
-//****************************//
-//******** Functions *********//
-//******* S T A R T **********//
-//****************************//
-
-//****************************//
-//* createMap function start *//
-//****************************//
 // bring all the data together in this function for the maps 
 function createMap(earthquakes,faultdata) {
 
-  //** This starts the section that builds all the mapping */ 
-  // Define streetmap, lightmap, darkmap and satellite layers
+  // Define streetmap and darkmap layers
   var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
@@ -134,7 +109,7 @@ function createMap(earthquakes,faultdata) {
   });
 
 
-  // Define a baseMaps object to hold our 4 base layers
+  // Define a baseMaps object to hold our base layers
   var baseMaps = {
     "Satellite Map":satmap,
     "Street Map": streetmap,
@@ -142,14 +117,14 @@ function createMap(earthquakes,faultdata) {
     "Dark Map": darkmap
   };
 
-  // Create overlay object to hold our 2 overlay layers 
+  // Create overlay object to hold our overlay layer
   var overlayMaps = {
     Earthquakes: earthquakes,
     "Tectonic Plates": faultdata
   //  "Fault Lines": faultdata
   };
 
-  // Create our map, giving it the starting / default streetmap and earthquakes layers to display on load
+  // Create our map, giving it the streetmap and earthquakes layers to display on load
   var myMap = L.map("map", {
     center: [
       20, -40
@@ -158,22 +133,13 @@ function createMap(earthquakes,faultdata) {
     layers: [satmap, earthquakes, faultdata]
   });
 
-// Create a layer control that will be in top right and controls all the maps and layers from above
-  // Pass in our baseMaps and overlayMaps that we created above
-  // Add the layer control to the map
-  L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
-  }).addTo(myMap);
- //** This ends the section that builds all the mapping */ 
 
-
- //** This section builds the legend */ 
- // Add a legend that is color coded to the depth of the quakes
  var legend = L.control({
     position: 'bottomright'
-  });
+});
 
- legend.onAdd = function (map) {
+legend.onAdd = function (map) {
+
     var div = L.DomUtil.create('div', 'info legend'),
         labels = ['<strong>Depth Index (km)</strong>'],
         lower = [-10, 10, 30, 50, 70, 90],
@@ -185,25 +151,31 @@ function createMap(earthquakes,faultdata) {
     }
     div.innerHTML = labels.join('<br>');
     return div;
-  };
+};
 
-  legend.addTo(myMap);
+legend.addTo(myMap);
+
+ 
+
+
+// Create a layer control
+  // Pass in our baseMaps and overlayMaps
+  // Add the layer control to the map
+  L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+  }).addTo(myMap);
+// Check back from here
 }
-//****************************//
-//** createMap function end  *//
-//****************************//
+
 
 function onEachFeature(feature, layer) {
   layer.bindPopup("<h3> Location: " + feature.properties.place +
       "</h3><hr><p><b>Magnitude: </b>" + feature.properties.mag + "</p><p><b> Depth of: </b>" + feature.geometry.coordinates[2] + " kilometers</p><p><b> Latitude: </b>" + feature.geometry.coordinates[1] +"</p><p><b> Longitude: </b>" + feature.geometry.coordinates[0] +"</p><p><b> Occured on:  </b>" + new Date(feature.properties.time) +"</p>",customOptions);
     };
 
-function getColorInd(d) {
+    function getColorInd(d) {
   return d >= 90 ? 'red' : d >= 70 && d <= 89 ? 'DarkOrange' : d >= 50 && d <= 69 ? 'Orange' : d >= 30 && d <= 49 ? 'Gold' :
   d >= 10 && d <= 29 ? 'GreenYellow':'Lime';
-    };
-//****************************//
-//******** Functions *********//
-//********* E N D ************//
-//****************************//
- 
+    }; 
+
+}
