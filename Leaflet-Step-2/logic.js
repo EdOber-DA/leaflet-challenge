@@ -33,7 +33,19 @@ Promise.all([
 ]).then(function(files){
    bothFeatures(files[0].features,files[1].features)
   });
+//****************************//
+//******* Mainline Code ******//
+//*******  E N D *************//
+//****************************//
 
+//****************************//
+//******** Functions *********//
+//******* S T A R T **********//
+//****************************//
+
+//*******************************//
+//* bothFeatures function start *//
+//*******************************//
 // This does the work - gets both files and logs them to the console for reference
 function bothFeatures(earthquakeData,ff_data) {
 console.log(earthquakeData)
@@ -43,7 +55,7 @@ console.log(ff_data)
 var faultdata = L.geoJson(ff_data);
 
 // Create a GeoJSON layer containing the features array on the earthquakeData object
-// Run the onEachFeature function (see bottom for functions). It is run once for each feature in the array
+// Run the onEachFeature function once for each feature in the array
 // pointToLayer will do all the heavy lifting to add colors to the markers based on depth and size them based on the magnitude
 var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature,
@@ -83,17 +95,9 @@ var earthquakes = L.geoJSON(earthquakeData, {
 createMap(earthquakes,faultdata);
 
 }
-//****************************//
-//******* Mainline Code ******//
-//*******  E N D *************//
-//****************************//
-
-
-
-//****************************//
-//******** Functions *********//
-//******* S T A R T **********//
-//****************************//
+//*******************************//
+//* bothFeatures function end   *//
+//*******************************//
 
 //****************************//
 //* createMap function start *//
@@ -191,6 +195,10 @@ function createMap(earthquakes,faultdata) {
 }
 //****************************//
 //** createMap function end  *//
+//****************************//
+
+//****************************//
+//** other functions         *//
 //****************************//
 
 function onEachFeature(feature, layer) {
