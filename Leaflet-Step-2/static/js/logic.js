@@ -19,7 +19,7 @@ var faulturl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/G
 var customOptions =
 {
 'maxWidth': '150',
-'width': '75',
+'width': '50',
 'className' : 'popupCustom'
 }    
 
