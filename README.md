@@ -10,7 +10,9 @@ Landing page for the assignment: https://edober-da.github.io/leaflet-challenge/
 (* Note: this is for Part-2 which includes all the features of part 1 and part 2)
 
 
-## Folders: Included in this repository are 2 main folders for each of the steps.  Each includes a landing page at the root, and static sub-folder with the css and JavaScript code. The main folders are:   
+## Folders: 
+
+Included in this repository are 2 main folders for each of the steps.  Each includes a landing page at the root, and static sub-folder with the css and JavaScript code. The main folders are:   
  
 - [Leaflet-Step-1](Leaflet-Step-1): Interactive map that displays geocoded global earthquake activity from the past week, color codes based on depth, sizes each marker according to magnitude, with color coded legend. Each geocoded marker is tagged with specific data about the event such as location, depth, magnitude and time of occurence.   
   
@@ -38,11 +40,11 @@ Landing page for the assignment: https://edober-da.github.io/leaflet-challenge/
 
 - Code:
 
-  * [Part-1 JavaScript code "logic.js":](Leaflet-Step-1/static/js/logic.js) Uses D3 to load the GeoJSON formatted feature set, and passes to geoJson function to parse, adding the formatted popups markers and legend. 
+  * [Part-1 JavaScript code "logic.js":](Leaflet-Step-1/static/js/logic.js) Uses d3.json to load the geoJSON formatted feature set, and passes to geoJson function to parse, adding the formatted popups markers and legend. 
 
-  * [Part-2 JavaScript code "logic.js":](Leaflet-Step-2/static/js/logic.js) Uses D3 to load the GeoJSON formatted feature set, and passes to geoJson function to parse, adding the formatted popups markers and legend. 
+  * [Part-2 JavaScript code "logic.js":](Leaflet-Step-2/static/js/logic.js) Uses d3.json to load the 2 geoJSON formatted feature sets, and passes them to geoJson function to parse, adding the formatted popups markers and legend. Also has extended map section adding the layeres and controls. 
 
-* CSS:
+- CSS:
 
   * [Part-1 CSS Style Sheet:](Leaflet-Step-1/static/css/style.css) Style sheet for Part 1 site. 
 
