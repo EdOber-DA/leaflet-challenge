@@ -7,20 +7,21 @@ Landing page for the assignment: https://edober-da.github.io/leaflet-challenge/
 
 ## Overview
 
-Leaflet-Challenge
-- Step 1: Interactive map that displays geocoded global earthquake activity from the past week, color codes based on depth, sizes each marker according to magnitude, with color coded legend. Each geocoded marker is tagged with specific data about the event such as location, depth, magnitude and time of occurence. 
-- Step 2: Adds tectonic plate line overlay and controls to add or remove layers, or change the map type.
-
-* Included in this repository are 4 Folders: static with the css and JavaScript code, data with the input json, images used, and notes from the development.  
-   
-  * [Javascript and Style Sheet:](static) Contains the js and css subfolders for the code.  
+* Included in this repository are 2 main folders for each of the steps.  Each includes a landing page at the root, and static sub-folder with the css and JavaScript code. The main folders are:   
+ 
+- [Leaflet-Step-1](Leaflet-Step-1):Interactive map that displays geocoded global earthquake activity from the past week, color codes based on depth, sizes each marker according to magnitude, with color coded legend. Each geocoded marker is tagged with specific data about the event such as location, depth, magnitude and time of occurence.   
   
-  * [Study Data:](data) JSON data for the dashboard.
+  * [Javascript:](Leaflet-Step-1/static/js) Contains the JavaScript code.
+  
+  * [CSS:](Leaflet-Step-1/static/css) Contains the CSS style sheet.
 
-  * [Images:](Images) Images for the site. 
+- [Leaflet-Step-2](Leaflet-Step-2): Adds tectonic plate line overlay and controls to add or remove layers, or change the map type.  This also has a subfolder "resources" with a copy of the tectonic plate info as a backup.
 
-  * [Documentation:](Notes) CORS documentation and color palette snippets used for deciding colors.  
+  * [Javascript:](Leaflet-Step-2/static/js) Contains the JavaScript code.
+  
+  * [CSS:](Leaflet-Step-2/static/css) Contains the CSS style sheet.
 
+   
 ## Files
 
 * [Landing Page:](index.html) Starting point for the site with dropdown field that initiates the data selection for the table. Displays the selected data in various charts and tables. 
