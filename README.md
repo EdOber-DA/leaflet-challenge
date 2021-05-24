@@ -10,9 +10,7 @@ Landing page for the assignment: https://edober-da.github.io/leaflet-challenge/
 (* Note: this is for Part-2 which includes all the features of part 1 and part 2)
 
 
-## Folders
-
-* Included in this repository are 2 main folders for each of the steps.  Each includes a landing page at the root, and static sub-folder with the css and JavaScript code. The main folders are:   
+## Folders: Included in this repository are 2 main folders for each of the steps.  Each includes a landing page at the root, and static sub-folder with the css and JavaScript code. The main folders are:   
  
 - [Leaflet-Step-1](Leaflet-Step-1): Interactive map that displays geocoded global earthquake activity from the past week, color codes based on depth, sizes each marker according to magnitude, with color coded legend. Each geocoded marker is tagged with specific data about the event such as location, depth, magnitude and time of occurence.   
   
@@ -29,10 +27,16 @@ Landing page for the assignment: https://edober-da.github.io/leaflet-challenge/
    
 ## Files
 
-* [Landing Page:](index.html) Starting point for the site with dropdown field that initiates the data selection for the table. Displays the selected data in various charts and tables. 
+- Landing Pages:
+
+   * [Part-2 Landing Page from Main:](index.html) Part-2 starting point for the site called from "Main". 
+
+   * [Part-1 Landing Page from subfolder:](Leaflet-Step-1/index.html) Part-1 starting point for the site from the "Leaflet-Step-1" subfolder. 
+
+   * [Part-2 Landing Page from subfolder:](Leaflet-Step-2/index.html) Part-2 starting point for the site from the "Leaflet-Step-2" subfolder. 
 
 
-* Code:
+- Code:
 
   * [Part-1 JavaScript code "logic.js":](Leaflet-Step-1/static/js/logic.js) Uses D3 to load the GeoJSON formatted feature set, and passes to geoJson function to parse, adding the formatted popups markers and legend. 
 
