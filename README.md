@@ -5,9 +5,11 @@
 
 The Leaflet Challenge is to build an interactive map that displays geocoded global earthquake activity. Part 1 includes data from the past week as markers that are color coded based on depth, sized according to magnitude, and a legend that explains the color coding. Part 2 adds tectonic plate line overlay and controls to add or remove layers, or change the map type.
 
+
 Landing page for the assignment: https://edober-da.github.io/leaflet-challenge/
 
-(* Note: this is for Part-2 which includes all the features of part 1 and part 2)
+(* Note: this landing page is for Part-2 which includes all the features of part 1 and part 2)
+
 
 
 ## Folders: 
